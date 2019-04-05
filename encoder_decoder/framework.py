@@ -484,7 +484,7 @@ class EncoderDecoderModel(graph_utils.NNModel):
         return E
 
 
-    def get_batch(self, data, bucket_id=-1, use_all=False):
+    def get_batch(self, data, bucket_id=-1, use_all=False, index):
         """
         Randomly sample a batch of examples from the specified bucket and
         convert the feature vectors into the dimensions required by the neural
@@ -500,9 +500,10 @@ class EncoderDecoderModel(graph_utils.NNModel):
             sample_pool = data[bucket_id]
 
         # Randomly sample a batch of encoder and decoder inputs from data
-        data_ids = list(xrange(len(sample_pool)))
+        #data_ids = list(xrange(len(sample_pool)))
+
         if not use_all:
-            data_ids = np.random.choice(data_ids, self.batch_size)
+            data_ids = list(xrange(index*self.batch_size,(index+1)*self.batch_size)
         for i in data_ids:
             data_point = sample_pool[i]
             encoder_inputs.append(data_point.sc_ids)

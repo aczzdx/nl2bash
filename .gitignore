@@ -73,3 +73,5 @@ data/bash/*
 parsers/test_data/*
 *.cm*
 *.nl*
+
+/env/

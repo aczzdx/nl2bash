@@ -84,12 +84,12 @@ def train(train_set, test_set):
 
             # progress bar
             start_time = time.time()
-            for _ in tqdm(xrange(FLAGS.steps_per_epoch)):
+            for i in tqdm(xrange(len(train_set.data_points) // FLAGS.batch_size)):
                 time.sleep(0.01)
-                random_number_01 = np.random.random_sample()
-                bucket_id = min([i for i in xrange(len(train_buckets_scale))
-                                 if train_buckets_scale[i] > random_number_01])
-                formatted_example = model.get_batch(train_set.data_points, bucket_id)
+                #random_number_01 = np.random.random_sample()
+                #bucket_id = min([i for i in xrange(len(train_buckets_scale))
+                                 #if train_buckets_scale[i] > random_number_01])
+                formatted_example = model.get_batch(train_set.data_points, bucket_id=-1, index=i)
                 model_outputs = model.step(
                     sess, formatted_example, bucket_id, forward_only=False)
                 loss += model_outputs.losses
